@@ -22,7 +22,7 @@ a {
 .dsf {
 	display: flex;
 	font-size: 48x;
-	font-weight: 600;
+	font-weight: bold;
 	line-height: 48px;
 	margin-top: 17px;
 	margin-right: 10px;
