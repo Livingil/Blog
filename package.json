@@ -11,6 +11,7 @@
 		"json": "json-server --watch src/db.json --delay 2000"
 	},
 	"dependencies": {
+		"@hookform/resolvers": "^5.0.1",
 		"eslint-config-prettier": "^10.1.5",
 		"eslint-plugin-prettier": "^5.4.0",
 		"prettier": "^3.5.3",
