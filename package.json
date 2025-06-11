@@ -8,7 +8,7 @@
 		"build": "vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"json": "json-server --watch src/db.json --delay 2000"
+		"json": "json-server --watch src/db.json --delay 1000"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.0.1",

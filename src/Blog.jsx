@@ -1,10 +1,10 @@
+import { useDispatch } from 'react-redux';
 import { useLayoutEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Header, Footer } from './components';
+import { Header, Footer, Modal } from './components';
 import { Authorization, Post, Registration, Users } from './pages';
-import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import { setUser } from './actions';
+import styled from 'styled-components';
 
 const AppColumn = styled.div`
 	display: flex;
@@ -35,6 +35,7 @@ export const Blog = () => {
 	}, [dispatch]);
 	return (
 		<AppColumn>
+			<Modal />
 			<Header />
 			<Page>
 				<Routes>
@@ -47,6 +48,7 @@ export const Blog = () => {
 					<Route path="*" element={<div>Error</div>} />
 				</Routes>
 			</Page>
+
 			<Footer />
 		</AppColumn>
 	);
