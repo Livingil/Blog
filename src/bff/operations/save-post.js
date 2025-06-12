@@ -1,4 +1,4 @@
-import { updatePost } from '../api';
+import { updatePost, addPost } from '../api';
 import { ROLE } from '../constans';
 import { sessions } from '../sessions';
 
@@ -13,7 +13,7 @@ export const savePost = async (hash, newPostData) => {
 		};
 	}
 
-	const updatedPost = await updatePost(newPostData);
+	const savePost = newPostData.id === '' ? await addPost(newPostData) : await updatePost(newPostData);
 
-	return { error: null, res: updatedPost };
+	return { error: null, res: savePost };
 };

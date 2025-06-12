@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Icon, Input } from '../../../../components';
 import { SpecialPanel } from '../special-panel/special-panel';
 import { sanitizeContent } from './utils';
@@ -9,36 +9,41 @@ import { useServerRequest } from '../../../../hooks';
 import styled from 'styled-components';
 
 const PostFormContainer = ({ className, post: { id, title, imageUrl, content, publishedAt } }) => {
-	const dispatch = useDispatch();
-
-	const navigate = useNavigate();
-
-	const requestServer = useServerRequest();
-
-	const imageRef = useRef(null);
-	const titleRef = useRef(null);
+	const [imageUrlValue, setImageUrlValue] = useState(imageUrl);
+	const [titleValue, setTitleValue] = useState(title);
 	const contentRef = useRef(null);
 
+	useLayoutEffect(() => {
+		setImageUrlValue(imageUrl);
+		setTitleValue(title);
+	}, [title, imageUrl]);
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const requestServer = useServerRequest();
+
 	const onSave = () => {
-		const newImageUrl = imageRef.current.value;
-		const newTitle = titleRef.current.value;
 		const newContent = sanitizeContent(contentRef.current.innerHTML);
 
 		dispatch(
-			savePostAsync(requestServer, { id, imageUrl: newImageUrl, title: newTitle, content: newContent }),
-		).then(() => navigate(`/post/${id}`));
+			savePostAsync(requestServer, { id, imageUrl: imageUrlValue, title: titleValue, content: newContent }),
+		).then(({ id }) => navigate(`/post/${id}`));
 	};
+
+	const onImageChange = ({ target }) => setImageUrlValue(target.value);
+	const onTitleChange = ({ target }) => setTitleValue(target.value);
 
 	return (
 		<div className={className}>
 			<div className="input">
-				<Input ref={imageRef} defaultValue={imageUrl} placeholder="Picturie..." />
-				<Input ref={titleRef} defaultValue={title} placeholder="Title..." />
+				<Input value={imageUrlValue} placeholder="Picturie..." onChange={onImageChange} />
+				<Input value={titleValue} placeholder="Title..." onChange={onTitleChange} />
 			</div>
 			<SpecialPanel
+				id={id}
 				publishedAt={publishedAt}
 				margin="20px 0"
-				editButton={<Icon id="fa-floppy-o" margin="0 10px 0 0" onClick={onSave} />}
+				editButton={<Icon id="fa-floppy-o" onClick={onSave} />}
 			/>
 			<div ref={contentRef} contentEditable={true} suppressContentEditableWarning={true} className="post-text">
 				{content}
@@ -59,6 +64,8 @@ export const PostForm = styled(PostFormContainer)`
 	}
 
 	& .post-text {
+		min-height: 80px;
+		border: 1px solid #000;
 		font-size: 18px;
 		white-space: pre-line;
 	}
