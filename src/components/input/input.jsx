@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 import styled from 'styled-components';
 
@@ -13,3 +14,5 @@ width:${({ width = '100%' }) => width}
 	border: 1px solid #000;
 	font-size: 18px;
 `;
+
+Input.propTypes = { width: PropTypes.string };

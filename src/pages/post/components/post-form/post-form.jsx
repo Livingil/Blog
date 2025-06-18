@@ -6,6 +6,7 @@ import { SpecialPanel } from '../special-panel/special-panel';
 import { sanitizeContent } from './utils';
 import { savePostAsync } from '../../../../actions';
 import { useServerRequest } from '../../../../hooks';
+import { PROP_TYPE } from '../../../../constans';
 import styled from 'styled-components';
 
 const PostFormContainer = ({ className, post: { id, title, imageUrl, content, publishedAt } }) => {
@@ -70,3 +71,7 @@ export const PostForm = styled(PostFormContainer)`
 		white-space: pre-line;
 	}
 `;
+
+PostForm.propTypes = {
+	post: PROP_TYPE.POST.isRequired,
+};
