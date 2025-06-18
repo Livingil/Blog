@@ -37,5 +37,6 @@ export const Pagination = styled(PaginationContainer)`
 		text-align: center;
 		border: 1px solid #000;
 		align-content: center;
+		margin: 0 5px;
 	}
 `;
